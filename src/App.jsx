@@ -102,6 +102,10 @@ const Predictions = () => {
   const [ground, setGround] = useState("");
   const [result, setResult] = useState(null);
 
+  const getTeamFlag = (teamName) => {
+    const team = teams.find((t) => t.name === teamName);
+    return team ? team.flag : null;
+  };
   const predict = () => {
     if (!team1 || !team2 || !ground) {
       alert("Please fill all the fields.");
@@ -116,30 +120,39 @@ const Predictions = () => {
   };
   
   return (
-    <motion.div 
+     <motion.div 
       initial={{ opacity: 0, y: 20 }} 
       animate={{ opacity: 1, y: 0 }} 
       transition={{ duration: 0.5 }}
     >
       <h2>Match Prediction</h2>
+
       <div className="form-group">
         <label>Team 1</label>
-        <select value={team1} onChange={(e) => setTeam1(e.target.value)}>
-          <option value="">Select Team 1</option>
-          {teams.map((team) => (
-            <option key={team.name} value={team.name}>{team.name}</option>
-          ))}
-        </select>
+        <div className="select-container">
+          <select value={team1} onChange={(e) => setTeam1(e.target.value)}>
+            <option value="">Select Team 1</option>
+            {teams.map((team) => (
+              <option key={team.name} value={team.name}>{team.name}</option>
+            ))}
+          </select>
+          {team1 && <img src={getTeamFlag(team1)} alt={team1} className="team-flag" />}
+        </div>
       </div>
+
       <div className="form-group">
         <label>Team 2</label>
-        <select value={team2} onChange={(e) => setTeam2(e.target.value)}>
-          <option value="">Select Team 2</option>
-          {teams.map((team) => (
-            <option key={team.name} value={team.name}>{team.name}</option>
-          ))}
-        </select>
+        <div className="select-container">
+          <select value={team2} onChange={(e) => setTeam2(e.target.value)}>
+            <option value="">Select Team 2</option>
+            {teams.map((team) => (
+              <option key={team.name} value={team.name}>{team.name}</option>
+            ))}
+          </select>
+          {team2 && <img src={getTeamFlag(team2)} alt={team2} className="team-flag" />}
+        </div>
       </div>
+
       <div className="form-group">
         <label>Ground</label>
         <select value={ground} onChange={(e) => setGround(e.target.value)}>
@@ -149,6 +162,7 @@ const Predictions = () => {
           ))}
         </select>
       </div>
+
       <motion.button 
         whileHover={{ scale: 1.1 }} 
         whileTap={{ scale: 0.9 }} 
@@ -156,6 +170,7 @@ const Predictions = () => {
       >
         Predict
       </motion.button>
+
       {result && <div className="result">{result}</div>}
     </motion.div>
   );
