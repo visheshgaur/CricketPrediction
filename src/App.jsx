@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import "./style.css"
+import RazorpayPayment from "./RazorpayPayment";
 const teams = [
   { name: "India", flag: "https://flagcdn.com/w320/in.png" },
   { name: "Australia", flag: "https://flagcdn.com/w320/au.png" },
@@ -126,7 +127,7 @@ const Predictions = () => {
       transition={{ duration: 0.5 }}
     >
       <h2>Match Prediction</h2>
-
+    <RazorpayPayment/>
       <div className="form-group">
         <label>Team 1</label>
         <div className="select-container">
