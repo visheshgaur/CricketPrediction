@@ -102,7 +102,7 @@ const Predictions = () => {
   const [team2, setTeam2] = useState("");
   const [ground, setGround] = useState("");
   const [result, setResult] = useState(null);
-
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
   const getTeamFlag = (teamName) => {
     const team = teams.find((t) => t.name === teamName);
     return team ? team.flag : null;
@@ -127,13 +127,16 @@ const Predictions = () => {
       transition={{ duration: 0.5 }}
     >
       <h2>Match Prediction</h2>
-    <RazorpayPayment/>
-      <div className="form-group">
-        <label>Team 1</label>
-        <div className="select-container">
-          <select value={team1} onChange={(e) => setTeam1(e.target.value)}>
-            <option value="">Select Team 1</option>
-            {teams.map((team) => (
+    {!paymentSuccess && (
+  <>
+  <p>To access predictions, please make the payment first.</p>
+  <RazorpayPayment setPaymentSuccess={setPaymentSuccess} />
+</>
+)}
+   {paymentSuccess&&(<>  <div className="form-group">
+         <label>Team 1</label>
+        <div className="select-container">          <select value={team1} onChange={(e) => setTeam1(e.target.value)}>
+            <option value="">Select Team 1</option>             {teams.map((team) => (
               <option key={team.name} value={team.name}>{team.name}</option>
             ))}
           </select>
@@ -171,7 +174,7 @@ const Predictions = () => {
       >
         Predict
       </motion.button>
-
+</>)}
       {result && <div className="result">{result}</div>}
     </motion.div>
   );
